@@ -1,0 +1,11 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'pollsapp/style.css' %}" />
+{% if latest_question_list %}
+  <ul>
+    {% for question in latest_question_list %}
+      <li>
+        <a href="{{ question.get_absolute_url }}">{{ question.question_text }}</a>
+      </li>
+    {% endfor %}
+  </ul>
+{% endif %}
