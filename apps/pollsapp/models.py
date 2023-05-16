@@ -13,6 +13,7 @@ class Question(models.Model):
     id = models.UUIDField(
         primary_key=True, default=uuid.uuid4(), editable=False)
     hashed_id = models.CharField(max_length=200)
+    featured = models.BooleanField(default=False)
     question_text = models.CharField(max_length=200, null=False)
     pub_date = models.DateTimeField("date published", auto_now_add=True)
     slug = models.SlugField()

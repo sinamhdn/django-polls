@@ -1,3 +1,72 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@200;400&family=Raleway:wght@300;500&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+  .top-navbar {
+    font-family: "Raleway", sans-serif;
+  }
+
+  .navtitle {
+    height: 3em;
+    line-height: 3em;
+  }
+
+  .navtitle__icon {
+    color: #9bc5fe;
+    margin-right: 0.5em;
+  }
+
+  .dark-navtitle__icon {
+    color: #344361;
+    margin-right: 0.5em;
+  }
+
+  .navtitle__text {
+    font-weight: 500;
+  }
+
+  .dlmodeswitcher {
+    position: absolute;
+    top: 1.5%;
+    left: 50%;
+    text-align: center;
+  }
+
+  .dlmodeswitcher__sun {
+    color: #ffee38;
+  }
+
+  .dlmodeswitcher__moon {
+    color: #3d4043;
+  }
+
+  .top-navbar__nav {
+    font-weight: 300;
+  }
+
+  .body {
+    font-family: "Noto Sans", sans-serif;
+  }
+
+  .body__content {
+    font-family: "Raleway", sans-serif;
+  }
+
+  .top-navbar-divider {
+    box-shadow: 0px 0px 2px 0px rgba(0, 255, 255, 0.7),
+      0px 0px 4px 0px rgba(0, 255, 255, 0.7),
+      0px 0px 8px 0px rgba(0, 255, 255, 0.7),
+      0px 0px 16px 0px rgba(0, 255, 255, 0.7);
+    height: 1px;
+  }
+
+  .dark-top-navbar-divider {
+    box-shadow: 0px 0px 2px 0px rgba(27, 44, 109, 0.7),
+      0px 0px 4px 0px rgba(27, 44, 109, 0.7),
+      0px 0px 8px 0px rgba(27, 44, 109, 0.7),
+      0px 0px 16px 0px rgba(27, 44, 109, 0.7);
+    height: 1px;
+  }
+}

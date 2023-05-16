@@ -12,7 +12,7 @@ class ChoiceInline(admin.TabularInline):
 
 class QuestionAdmin(admin.ModelAdmin):
     fieldsets = [
-        (None, {"fields": ["question_text"]}),
+        (None, {"fields": ["question_text", "featured"]}),
         ("Date info", {"fields": ["pub_date"]}),
     ]
     list_display = ("id", "hashed_id", "slug",

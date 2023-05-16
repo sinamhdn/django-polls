@@ -1,21 +1,28 @@
 {% load static tailwind_tags %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="{% if is_dark_theme %}dark{% endif %}">
     <head>
         <title>Polls</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta name="description" content="Simple django polls application." />
+        <meta name="keywords" content="Python, Django, Polls">
+        <link href="{% static 'fontawesomefree/css/fontawesome.css' %}"
+              rel="stylesheet"
+              type="text/css">
+        <link href="{% static 'fontawesomefree/css/solid.css' %}"
+              rel="stylesheet"
+              type="text/css">
+        <link rel="stylesheet" href="{% static 'css/flowbite.min.css' %}">
         {% tailwind_css %}
     </head>
-    <body class="bg-gray-50 font-serif leading-normal tracking-normal">
-        <div class="container mx-auto">
-            <section class="flex items-center justify-center h-screen">
-                <h1 class="text-5xl">Django + Tailwind = ❤️</h1>
-                <br>
-                {% block content %}
-                {% endblock content %}
-            </section>
+    <body class="bg-gray-300 dark:bg-slate-800 text-slate-800 dark:text-gray-300 body">
+        {% include "themeapp/header.html" %}
+        <div class="container mx-auto max-w-screen-xl body__content">
+            {% block themecontent %}
+            {% endblock themecontent %}
         </div>
+        <script src="{% static 'js/flowbite.min.js' %}"></script>
     </body>
 </html>
