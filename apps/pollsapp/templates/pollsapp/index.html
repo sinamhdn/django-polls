@@ -1,12 +1,12 @@
 {% extends "themeapp/base.html" %}
-{% block layoutcontent %}
+{% block themecontent %}
   {% if latest_question_list %}
     <ul>
       {% for question in latest_question_list %}
         <li>
-          <a href="{{ question.get_absolute_url }}">{{ question.question_text }}</a>
+          <a href="{{ question.get_absolute_url }}">{{ question.question_text|title }}?</a>
         </li>
       {% endfor %}
     </ul>
   {% endif %}
-{% endblock layoutcontent %}
+{% endblock themecontent %}

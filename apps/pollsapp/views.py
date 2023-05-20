@@ -32,9 +32,17 @@ class ResultsView(generic.DetailView):
     model = Question
     template_name = "pollsapp/results.html"
 
+    def get_context_data(self, **kwargs):
+        context = super(ResultsView, self).get_context_data(**kwargs)
+        total_votes = 0
+        for choice in self.object.choice_set.all():
+            total_votes += choice.votes
+        context['total_votes'] = total_votes
+        return context
 
-def vote(request, pkey, question_id, question_slug):
-    question = get_object_or_404(Question, id=pkey)
+
+def vote(request, question_id, question_slug):
+    question = get_object_or_404(Question, id=question_id)
     try:
         selected_choice = question.choice_set.get(pk=request.POST["choice"])
     except (KeyError, Choice.DoesNotExist):
@@ -49,5 +57,7 @@ def vote(request, pkey, question_id, question_slug):
         )
     else:
         selected_choice.votes = F('votes') + 1
+        question.total_votes = F('total_votes') + 1
         selected_choice.save()
-        return HttpResponseRedirect(reverse("pollsapp:results", args=(question.id, question.slug,)))
+        question.save()
+        return HttpResponseRedirect(reverse("pollsapp:results", args=(question.id, question.slug)))

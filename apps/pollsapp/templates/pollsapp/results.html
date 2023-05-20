@@ -1,0 +1,18 @@
+{% extends "themeapp/base.html" %}
+{% block themecontent %}
+  <h1>{{ question.question_text }}</h1>
+  <ul>
+    {% for choice in question.choice_set.all %}
+      <li>
+        <label for="vote">
+          {{ choice.choice_text|title }}
+          {% if total_votes != 0 %}
+            <progress id="vote" class="votes_progress_bar" value={{ choice.votes }} max={{ total_votes }}></progress>
+          {% endif %}
+          {{ choice.votes }} vote{{ choice.votes|pluralize }}
+        </label>
+      </li>
+    {% endfor %}
+  </ul>
+  <div class="total_votes">Total Votes: {{ total_votes }}</div>
+{% endblock themecontent %}

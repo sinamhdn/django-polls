@@ -1,29 +1,24 @@
 from django.db import models
+from django.db.models import F
 from django.urls import reverse
 from django.contrib import admin
 from django.utils import timezone
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
-import sys
-import uuid
 import datetime
 
 
 class Question(models.Model):
-    id = models.UUIDField(
-        primary_key=True, default=uuid.uuid4(), editable=False)
-    hashed_id = models.CharField(max_length=200)
-    featured = models.BooleanField(default=False)
     question_text = models.CharField(max_length=200, null=False)
     pub_date = models.DateTimeField("date published", auto_now_add=True)
+    total_votes = models.PositiveIntegerField(default=0)
+    featured = models.BooleanField(default=False)
     slug = models.SlugField()
 
     def __str__(self):
         return self.question_text
 
     def save(self, *args, **kwargs):
-        if not self.hashed_id:
-            self.hashed_id = str(hash(self.id) % ((sys.maxsize + 1) * 2))
         if not self.slug:
             self.slug = slugify(self.title)
         return super().save(*args, **kwargs)
@@ -38,15 +33,13 @@ class Question(models.Model):
         return now - datetime.timedelta(days=1) <= self.pub_date <= now
 
     def get_absolute_url(self):
-        return reverse("pollsapp:detail", args=[str(self.id), str(self.hashed_id), str(self.slug)])
+        return reverse("pollsapp:detail", args=[str(self.id), str(self.slug)])
 
 
 class Choice(models.Model):
-    id = models.UUIDField(
-        primary_key=True, default=uuid.uuid4(), editable=False)
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
     choice_text = models.CharField(max_length=200)
-    votes = models.IntegerField(default=0)
+    votes = models.PositiveIntegerField(default=0)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.choice_text
