@@ -27,7 +27,27 @@ class QuestionAdmin(admin.ModelAdmin):
 
 
 class ChoiceAdmin(admin.ModelAdmin):
-    list_display = ("choice_text", "votes",)
+    readonly_fields = ['id', 'question', 'choice_text', 'votes']
+    raw_id_fields = ['question']
+    list_display = ('choice_text', 'votes', 'question',  'id')
+
+    def has_add_permission(self, request, obj=None):
+        return False
+
+    def has_change_permission(self, request, obj=None):
+        return False
+
+    def get_actions(self, request):
+        actions = super().get_actions(request)
+        if 'delete_selected' in actions:
+            del actions['delete_selected']
+        return actions
+
+    def save_model(self, request, obj, form, change):
+        global total_votes
+        total_votes += request.votes
+        print('TOTAL VOTES2: ', total_votes)
+        return super().save_model(request, obj, form, change)
 
 
 admin.site.register(Question, QuestionAdmin)

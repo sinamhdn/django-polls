@@ -6,9 +6,6 @@ import sys
 from .models import Question, Choice
 
 
-total_votes = 0
-
-
 class ChoiceInline(admin.TabularInline):
     model = Choice
     extra = 3
@@ -27,10 +24,22 @@ class QuestionAdmin(admin.ModelAdmin):
     exclude = ["hashed_id", "slug"]
     readonly_fields = ('pub_date',)
 
+    def save_related(self, request, form, formsets, change):
+        obj = form.instance
+        obj.total_votes = 0
+        post_items_list = list(request.POST)
+        wordsearch = 'votes'
+        iterator = [item for item in post_items_list if wordsearch in item]
+        iter_len = len(iterator)-1
+        t_votes = 0
+        for index in range(iter_len):
+            print(f'choice_set-{index}-votes')
+            t_votes += int(request.POST[f'choice_set-{index}-votes'])
+        obj.total_votes = t_votes
+        obj.save()
+        return super().save_related(request, form, formsets, change)
+
     def save_model(self, request, obj, form, change):
-        global total_votes
-        obj.total_votes = total_votes
-        total_votes = 0
         if not obj.slug:
             obj.slug = slugify(obj.question_text)
         return super().save_model(request, obj, form, change)
@@ -52,11 +61,6 @@ class ChoiceAdmin(admin.ModelAdmin):
         if 'delete_selected' in actions:
             del actions['delete_selected']
         return actions
-
-    def save_model(self, request, obj, form, change):
-        global total_votes
-        total_votes += request.votes
-        return super().save_model(request, obj, form, change)
 
 
 admin.site.register(Question, QuestionAdmin)
