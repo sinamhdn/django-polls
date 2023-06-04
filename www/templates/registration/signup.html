@@ -1,0 +1,15 @@
+{% extends "themeapp/base.html" %}
+{% block title %}
+    Register
+{% endblock title %}
+{% load crispy_forms_tags %}
+{% block themecontent %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <p>
+            Have an account? Login <a href="{% url 'login' %}">Here</a>
+        </p>
+        <button type="submit" class="btn btn-success">Register</button>
+    </form>
+{% endblock themecontent %}

@@ -42,6 +42,7 @@ class QuestionAdmin(admin.ModelAdmin):
     def save_model(self, request, obj, form, change):
         if not obj.slug:
             obj.slug = slugify(obj.question_text)
+        obj.user_id = request.user.id
         return super().save_model(request, obj, form, change)
 
 

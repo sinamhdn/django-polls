@@ -24,7 +24,18 @@ from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", views.index, name="home"),
+    path("", include("django.contrib.auth.urls")),
+    path("signup/", views.signup, name="signup"),
     path('polls/', include("pollsapp.urls")),
     path('theme/', include("themeapp.urls")),
+    path("400/", views.test_400),
+    path("403/", views.test_403),
+    path("404/", views.test_404),
+    path("500/", views.test_500),
     path("__reload__/", include("django_browser_reload.urls")),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+handler400 = 'www.views.error_400'
+handler403 = 'www.views.error_403'
+handler404 = 'www.views.error_404'
+handler500 = 'www.views.error_500'

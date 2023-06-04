@@ -1,25 +1,39 @@
 {% extends "themeapp/base.html" %}
 {% block themecontent %}
-  <form action="{% url 'pollsapp:vote' question.id question.slug %}"
+  <form class="my-8 mx-auto w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 p-8"
+        action="{% url 'pollsapp:vote' question.id question.slug %}"
         method="post">
     {% csrf_token %}
-    <fieldset>
-      <legend>
-        <h1>{{ question.question_text|title }}?</h1>
-      </legend>
+    <div class="flex flex-col items-center pb-10">
+      <fieldset>
+        <legend class="mb-8">
+          <h1 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">{{ question.question_text|title }}?</h1>
+          <p class="text-sm user-indicator">Asked by {{ user|title }}</p>
+        </legend>
+        <div class="choice-items">
+          {% for choice in question.choice_set.all %}
+            <div class="choice-item mb-2">
+              <input type="radio"
+                     name="choice"
+                     id="choice{{ forloop.counter }}"
+                     value="{{ choice.id }}" />
+              <label for="choice{{ forloop.counter }}">{{ choice.choice_text|title }}.</label>
+            </div>
+          {% endfor %}
+        </div>
+      </fieldset>
+      <input class="inline-flex items-center my-4 px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+             type="submit"
+             value="Vote" />
       {% if error_message %}
-        <p>
+        <p class="text-red-600">
           <strong>{{ error_message }}</strong>
         </p>
       {% endif %}
-      {% for choice in question.choice_set.all %}
-        <input type="radio"
-               name="choice"
-               id="choice{{ forloop.counter }}"
-               value="{{ choice.id }}" />
-        <label for="choice{{ forloop.counter }}">{{ choice.choice_text|title }}</label>
-      {% endfor %}
-    </fieldset>
-    <input type="submit" value="Vote" />
+      {% if voted_before %}
+        <a class="inline-flex my-2 items-center px-4 py-2 text-sm font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-700 dark:focus:ring-gray-700"
+           href="{% url 'pollsapp:results' question.id question.slug %}">See Results</a>
+      {% endif %}
+    </div>
   </form>
 {% endblock themecontent %}

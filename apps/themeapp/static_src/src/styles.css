@@ -3,57 +3,113 @@
 @tailwind components;
 @tailwind utilities;
 
+.top-navbar {
+  font-family: "Raleway", sans-serif;
+}
+
+.navtitle {
+  height: 3em;
+  line-height: 3em;
+}
+
+.navtitle__icon {
+  color: #9bc5fe;
+  margin-right: 0.5em;
+}
+
+.dark-navtitle__icon {
+  color: #344361;
+  margin-right: 0.5em;
+}
+
+.navtitle__text {
+  font-weight: 500;
+}
+
+.dlmodeswitcher {
+  position: absolute;
+  top: 1.5%;
+  left: 50%;
+  text-align: center;
+}
+
+.dlmodeswitcher__sun {
+  color: #ffee38;
+}
+
+.dlmodeswitcher__moon {
+  color: #3d4043;
+}
+
+.top-navbar__nav {
+  font-weight: 300;
+}
+
+.body {
+  font-family: "Noto Sans", sans-serif;
+}
+
+.body__content {
+  font-family: "Raleway", sans-serif;
+}
+
+.see-all-posts-wrapper {
+  width: 100%;
+  text-align: center;
+  margin: 2em 0;
+}
+
+.see-all-posts-text {
+  display: inline-block;
+  padding: 0.5em 1em;
+}
+
+.error-page-title {
+  padding: 2em 0;
+  text-align: center;
+}
+
+.featured-posts-title {
+  border-bottom: 1px solid;
+  border-bottom-color: #6ca5fa;
+}
+
+.popular-posts-title {
+  border-bottom: 1px solid;
+  border-bottom-color: #6ca5fa;
+}
+
+.user-indicator {
+  opacity: 50%;
+}
+
+.featured-question-item,
+.popular-question-item {
+  @apply dark:bg-gray-700 bg-gray-200;
+}
+
+.vote-count {
+  margin-top: -1.7em;
+}
+
+.login-form-wrapper {
+  text-align: center;
+}
+
+.login-form-container {
+  padding: 2em;
+}
+
+.login-submit-btn {
+  cursor: pointer;
+}
+
+.question-input-form-control,
+.choice-input-form-control {
+  background: gray;
+}
+
 @layer utilities {
-  .top-navbar {
-    font-family: "Raleway", sans-serif;
-  }
-
-  .navtitle {
-    height: 3em;
-    line-height: 3em;
-  }
-
-  .navtitle__icon {
-    color: #9bc5fe;
-    margin-right: 0.5em;
-  }
-
-  .dark-navtitle__icon {
-    color: #344361;
-    margin-right: 0.5em;
-  }
-
-  .navtitle__text {
-    font-weight: 500;
-  }
-
-  .dlmodeswitcher {
-    position: absolute;
-    top: 1.5%;
-    left: 50%;
-    text-align: center;
-  }
-
-  .dlmodeswitcher__sun {
-    color: #ffee38;
-  }
-
-  .dlmodeswitcher__moon {
-    color: #3d4043;
-  }
-
-  .top-navbar__nav {
-    font-weight: 300;
-  }
-
-  .body {
-    font-family: "Noto Sans", sans-serif;
-  }
-
-  .body__content {
-    font-family: "Raleway", sans-serif;
-  }
-
   .top-navbar-divider {
     box-shadow: 0px 0px 2px 0px rgba(0, 255, 255, 0.7),
       0px 0px 4px 0px rgba(0, 255, 255, 0.7),
@@ -68,5 +124,9 @@
       0px 0px 8px 0px rgba(27, 44, 109, 0.7),
       0px 0px 16px 0px rgba(27, 44, 109, 0.7);
     height: 1px;
+  }
+
+  .dark-see-all-posts-text {
+    color: #2e57dd;
   }
 }

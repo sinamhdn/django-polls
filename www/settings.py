@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-2_v91g)c=b^p6d+ks*rwgw!9!g_-nc323-1&a_8t!l@%(w#@=w
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 INTERNAL_IPS = [
     "127.0.0.1",
@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # third party liberaries
+    'crispy_bootstrap5',
+    'crispy_forms',
     'fontawesomefree',
     'tailwind',
     'django_browser_reload',
@@ -55,6 +57,10 @@ INSTALLED_APPS = [
     'pollsapp.apps.PollsAppConfig',
     'themeapp.apps.ThemeAppConfig',
 ]
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstarp5"
+
+CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -148,3 +154,6 @@ MEDIA_ROOT = BASE_DIR / "media"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'login'

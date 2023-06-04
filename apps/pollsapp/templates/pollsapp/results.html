@@ -1,18 +1,19 @@
 {% extends "themeapp/base.html" %}
 {% block themecontent %}
-  <h1>{{ question.question_text }}</h1>
-  <ul>
-    {% for choice in question.choice_set.all %}
-      <li>
-        <label for="vote">
-          {{ choice.choice_text|title }}
+  <div class=" text-center p-20 results-page-wrapper">
+    <h1>{{ question.question_text|title }}?</h1>
+    <p class="text-sm px-2 user-indicator">Asked by {{ user|title }}</p>
+    <ul>
+      {% for choice in question.choice_set.all %}
+        <li class="my-4">
+          <label class="block my-2" for="vote">{{ choice.choice_text|title }}.</label>
           {% if total_votes != 0 %}
-            <progress id="vote" class="votes_progress_bar" value={{ choice.votes }} max={{ total_votes }}></progress>
+            <progress id="vote" class="w-1/2 bg-gray-200 rounded-full dark:bg-gray-700 votes_progress_bar" value={{ choice.votes }} max={{ total_votes }}></progress>
           {% endif %}
-          {{ choice.votes }} vote{{ choice.votes|pluralize }}
-        </label>
-      </li>
-    {% endfor %}
-  </ul>
-  <div class="total_votes">Total Votes: {{ total_votes }}</div>
+          <div class=" text-white vote-count">{{ choice.votes }} vote{{ choice.votes|pluralize }}</div>
+        </li>
+      {% endfor %}
+    </ul>
+    <div class="total_votes">Total Votes: {{ total_votes }}</div>
+  </div>
 {% endblock themecontent %}
