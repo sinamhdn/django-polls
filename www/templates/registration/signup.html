@@ -4,12 +4,20 @@
 {% endblock title %}
 {% load crispy_forms_tags %}
 {% block themecontent %}
-    <form method="post">
-        {% csrf_token %}
-        {{ form|crispy }}
-        <p>
-            Have an account? Login <a href="{% url 'login' %}">Here</a>
-        </p>
-        <button type="submit" class="btn btn-success">Register</button>
-    </form>
+    <div class="submit-form-wrapper">
+        <div class="mt-8 inline-block rounded submit-form-container">
+            <div class="text-red-700 form-errors">{{ form.non_field_errors }}</div>
+            <form method="post">
+                {% csrf_token %}
+                <div class="submit-form-inner-container">{{ form|crispy }}</div>
+                <p>
+                    Have an account? Login <a class="here-btn" href="{% url 'login' %}"><u>Here</u></a>
+                </p>
+                <button type="submit"
+                        class="text-white bg-green-500 hover:bg-green-800 w-full rounded-full text-xl">
+                    Register
+                </button>
+            </form>
+        </div>
+    </div>
 {% endblock themecontent %}

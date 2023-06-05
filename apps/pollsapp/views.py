@@ -31,7 +31,8 @@ class DetailView(generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(DetailView, self).get_context_data(**kwargs)
-        context['user'] = self.request.user
+        context['user'] = self.object.user
+        # context['user'] = self.request.user
         return context
 
     # def get(self, request):
@@ -49,7 +50,8 @@ class ResultsView(generic.DetailView):
         for choice in self.object.choice_set.all():
             total_votes += choice.votes
         context['total_votes'] = total_votes
-        context['user'] = self.request.user
+        context['user'] = self.object.user
+        # context['user'] = self.request.user
         return context
 
 
@@ -113,5 +115,43 @@ def create_poll(request):
             for choice in choice_list:
                 choice.question_id = question.id
                 choice.save()
-        return HttpResponseRedirect(reverse('pollsapp:index'))
+            return HttpResponseRedirect(reverse('pollsapp:index'))
+    return render(request, "pollsapp/poll_create_or_update.html", {"question_form": question_form, "choice_formset": choice_formset})
+
+
+@login_required(login_url='login')
+def edit_poll(request, question_id, question_slug):
+    cur_question = Question.objects.get(id=question_id)
+    # cur_choicesets = Choice.objects.filter(question_id=question_id)
+    question_form = QuestionForm(
+        request.POST or None, request.FILES or None, instance=cur_question)
+    choice_formset = ChoiceFormSet(
+        request.POST or None, request.FILES or None, instance=cur_question)
+    if request.method == 'POST':
+        if all([question_form.is_valid(), choice_formset.is_valid()]):
+            question = question_form.save(commit=False)
+            choice_list = choice_formset.save(commit=False)
+            question.user_id = request.user.id
+            question.save()
+            for choice in choice_list:
+                choice.question_id = question.id
+                choice.save()
+            return HttpResponseRedirect(reverse('pollsapp:index'))
+    return render(request, "pollsapp/poll_create_or_update.html", {"question_form": question_form, "choice_formset": choice_formset})
+
+
+@login_required(login_url='login')
+def delete_poll(request, question_id, question_slug):
+    question_form = QuestionForm(request.POST or None, request.FILES or None)
+    choice_formset = ChoiceFormSet(request.POST or None, request.FILES or None)
+    if request.method == 'POST':
+        if all([question_form.is_valid(), choice_formset.is_valid()]):
+            question = question_form.save(commit=False)
+            choice_list = choice_formset.save(commit=False)
+            question.user_id = request.user.id
+            question.save()
+            for choice in choice_list:
+                choice.question_id = question.id
+                choice.save()
+            return HttpResponseRedirect(reverse('pollsapp:index'))
     return render(request, "pollsapp/poll_create_or_update.html", {"question_form": question_form, "choice_formset": choice_formset})

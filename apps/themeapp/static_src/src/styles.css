@@ -92,11 +92,12 @@
   margin-top: -1.7em;
 }
 
-.login-form-wrapper {
+.submit-form-wrapper {
   text-align: center;
 }
 
-.login-form-container {
+.submit-form-container {
+  @apply bg-slate-100 dark:bg-slate-900;
   padding: 2em;
 }
 
@@ -104,9 +105,17 @@
   cursor: pointer;
 }
 
+.here-btn {
+  @apply text-blue-900 dark:text-blue-400;
+}
+
 .question-input-form-control,
 .choice-input-form-control {
-  background: gray;
+  @apply bg-slate-100 dark:bg-slate-900;
+}
+
+.submit-form-inner-container input {
+  @apply bg-slate-100 dark:bg-slate-900 rounded;
 }
 
 @layer utilities {

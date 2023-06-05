@@ -2,7 +2,7 @@
 {% block themecontent %}
   <div class=" text-center p-20 results-page-wrapper">
     <h1>{{ question.question_text|title }}?</h1>
-    <p class="text-sm px-2 user-indicator">Asked by {{ user|title }}</p>
+    <p class="text-sm px-2 user-indicator">Asked by {{ question.user|title }}</p>
     <ul>
       {% for choice in question.choice_set.all %}
         <li class="my-4">

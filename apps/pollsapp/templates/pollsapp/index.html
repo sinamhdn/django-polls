@@ -5,7 +5,7 @@
       {% for question in latest_question_list %}
         <li class="my-2">
           <a href="{{ question.get_absolute_url }}">{{ question.question_text|title }}?</a>
-          <p class="text-sm px-2 user-indicator">Asked by {{ user|title }}</p>
+          <p class="text-sm px-2 user-indicator">Asked by {{ question.user|title }}</p>
         </li>
       {% endfor %}
     </ul>

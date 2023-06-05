@@ -1,12 +1,16 @@
 {% extends "themeapp/base.html" %}
 {% block themecontent %}
+  <div class="see-all-posts-wrapper">
+    <a href="{% url 'pollsapp:index' %}"
+       class="text-lg text-white bg-blue-700 dark:hover:bg-gray-200 hover:bg-blue-500 dark:bg-white dark:text-blue-500 rounded-full text-center mt-2 see-all-posts-text">See All Polls</a>
+  </div>
   {% if featured_questions %}
     <h2 class="px-2 mt-4 featured-posts-title">Featured Polls</h2>
     {% for question in featured_questions %}
       <ul class="px-4 my-2">
         <li class="my-8 p-4 featured-question-item">
           <a class="text-xl" href="{{ question.get_absolute_url }}">{{ question.question_text|title }}?</a>
-          <p class="text-sm px-2 user-indicator">Asked by {{ user|title }}</p>
+          <p class="text-sm px-2 user-indicator">Asked by {{ question.user.username|title }}</p>
         </li>
       </ul>
     {% endfor %}
@@ -17,13 +21,9 @@
       <ul class="px-4 my-2">
         <li class="my-8 p-4 popular-question-item">
           <a class="text-xl" href="{{ question.get_absolute_url }}">{{ question.question_text|title }}?</a>
-          <p class="text-sm px-2 user-indicator">Asked by {{ user|title }}</p>
+          <p class="text-sm px-2 user-indicator">Asked by {{ question.user.username|title }}</p>
         </li>
       </ul>
     {% endfor %}
   {% endif %}
-  <div class="see-all-posts-wrapper">
-    <a href="{% url 'pollsapp:index' %}"
-       class="text-lg text-white bg-blue-700 dark:hover:bg-gray-200 hover:bg-blue-500 dark:bg-white dark:text-blue-500 rounded-full text-center my-2 see-all-posts-text">See All Polls</a>
-  </div>
 {% endblock themecontent %}

@@ -1,22 +1,22 @@
 {% extends "themeapp/base.html" %}
 {% block themecontent %}
-    <div class="login-form-wrapper">
-        <div class="bg-gray-400 dark:bg-gray-700 mt-8 inline-block rounded login-form-container">
+    <div class="submit-form-wrapper">
+        <div class="mt-8 inline-block rounded submit-form-container">
             <div class="text-red-700 form-errors">{{ form.non_field_errors }}</div>
             {% comment %} <button class="add-choice-btn">Add Choice</button> {% endcomment %}
             <form action="{% url 'pollsapp:new-poll' %}" method="post">
                 {% csrf_token %}
                 {{ choice_formset.management_form }}
                 <h3 class="my-2 question-text-title">Question</h3>
+                {% comment %} {% for error in question_form.errors %}<div class="text-red-700 form-errors">{{ error }}</div>{% endfor %} {% endcomment %}
                 {{ question_form.as_div }}
-                {% for error in question_form.errors %}<div class="text-red-700 form-errors">{{ error }}</div>{% endfor %}
                 <h3 class="mt-8 mb-2 question-choices-title">Choices</h3>
                 <div class="choice-form-container">
                     {% for cform in choice_formset %}
                         <div class="mb-2 choice-form">
                             {% comment %} <div class="choice{{ forloop.counter0 }}">{{ cform }}</div> {% endcomment %}
+                            {% comment %} {% for error in cform.errors %}<div class="text-red-700 form-errors">{{ error }}</div>{% endfor %} {% endcomment %}
                             {{ cform }}
-                            {% for error in cform.errors %}<div class="text-red-700 form-errors">{{ error }}</div>{% endfor %}
                         </div>
                     {% endfor %}
                     <button id="add-choice"

@@ -8,7 +8,7 @@
       <fieldset>
         <legend class="mb-8">
           <h1 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">{{ question.question_text|title }}?</h1>
-          <p class="text-sm user-indicator">Asked by {{ user|title }}</p>
+          <p class="text-sm user-indicator">Asked by {{ question.user|title }}</p>
         </legend>
         <div class="choice-items">
           {% for choice in question.choice_set.all %}
@@ -30,10 +30,18 @@
           <strong>{{ error_message }}</strong>
         </p>
       {% endif %}
-      {% if voted_before %}
+      {% comment %} {% if voted_before %} {% endcomment %}
+      {% if question.user_id == user.id %}
         <a class="inline-flex my-2 items-center px-4 py-2 text-sm font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-700 dark:focus:ring-gray-700"
            href="{% url 'pollsapp:results' question.id question.slug %}">See Results</a>
       {% endif %}
+      {% if question.user.username == request.user.username %}
+        <a class="inline-flex my-2 items-center px-4 py-2 text-sm font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-700 dark:focus:ring-gray-700"
+           href="{% url 'pollsapp:edit-poll' question.id question.slug %}">Edit</a>
+        <a class="inline-flex my-2 items-center px-4 py-2 text-sm font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-700 dark:focus:ring-gray-700"
+           href="{% url 'pollsapp:results' question.id question.slug %}">Delete</a>
+      {% endif %}
+      {% comment %} {% endif %} {% endcomment %}
     </div>
   </form>
 {% endblock themecontent %}

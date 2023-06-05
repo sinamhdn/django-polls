@@ -1,12 +1,15 @@
 from django import forms
 from django.forms import inlineformset_factory
 from django.utils.translation import gettext as _
+# from django.contrib.auth.forms import AuthenticationForm
 
-from pollsapp.utils.forms import is_empty_form, is_form_persisted
+# from pollsapp.utils.forms import is_empty_form, is_form_persisted
 from .models import Question, Choice
 
 
 class QuestionForm(forms.ModelForm):
+    error_css_class = "question_error"
+
     def __init__(self, *args, **kwargs):
         # globally override the Django >=1.6 default of ':'
         kwargs.setdefault('label_suffix', '')
@@ -44,5 +47,12 @@ class ChoiceForm(forms.ModelForm):
         localized_fields = ['__all__']
 
 
-ChoiceFormSet = inlineformset_factory(Question, Choice, form=ChoiceForm, extra=2, max_num=50,
-                                      validate_max=True, absolute_max=1500, can_delete=False, can_delete_extra=False)
+# class PrettyAuthenticationForm(AuthenticationForm):
+#     class Meta:
+#         widgets = {
+#             'username': forms.TextInput(attrs={'class': 'rounded login-input-form-control'})
+#         }
+
+
+ChoiceFormSet = inlineformset_factory(Question, Choice, form=ChoiceForm, extra=2, max_num=50, min_num=2,
+                                      validate_max=True, validate_min=True, absolute_max=1500, can_delete=False, can_delete_extra=False)

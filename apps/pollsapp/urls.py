@@ -13,4 +13,9 @@ urlpatterns = [
          views.vote, name="vote"),
     path("new/",
          views.create_poll, name="new-poll"),
+    path("edit/<int:question_id>/<slug:question_slug>/",
+         views.edit_poll, name="edit-poll"),
+    path("delete/<int:question_id>/<slug:question_slug>/",
+         views.delete_poll, name="delete-poll"),
+
 ]
